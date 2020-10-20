@@ -49,16 +49,49 @@ class _TaskDetailState extends State<TaskDetail> {
                           ),
                         ),
                         SizedBox(
-                          height: 8,
+                          height: 16,
                         ),
                         Center(
-                          child: Text(
-                            "${data['task_budget']} Kč",
-                            style: TextStyle(
-                              fontSize: 26,
-                              fontWeight: FontWeight.w900,
-                            ),
+                          child: Column(
+                            children: [
+                              Text(
+                                "${data['task_budget']} Kč",
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.w900,
+                                ),
+                              ),
+                              RaisedButton(
+                                color: Colors.greenAccent.shade400,
+                                onPressed: () {},
+                                child: const Text('Vytvořit nabídku',
+                                    style: TextStyle(fontSize: 20)),
+                              ),
+                            ],
                           ),
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        Divider(
+                          color: Colors.white,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Pavel V.",
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.w500),
+                            ),
+                            Text(
+                              "Hodnotim zaporne, akce byla na pytel a zanechal jsem koblih za odmenu. Slysel jsem, ze si na nem rano pochutnal pes.",
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ));
