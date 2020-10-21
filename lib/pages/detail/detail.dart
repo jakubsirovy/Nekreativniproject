@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nekreativniproject/api.dart';
+import 'package:nekreativniproject/pages/detail/components/comment.dart';
 
 class TaskDetail extends StatefulWidget {
   final int id;
@@ -14,6 +15,17 @@ class _TaskDetailState extends State<TaskDetail> {
     return data;
   }
 
+  ScrollController scrollcontroller = new ScrollController();
+
+  buildList(int count) {
+    List<Widget> widgets = [];
+    for (int i = 0; i < count; i++) {
+      widgets.add(Comment());
+    }
+
+    return widgets;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,87 +33,70 @@ class _TaskDetailState extends State<TaskDetail> {
         appBar: AppBar(
           title: Text("Detail o položce"),
         ),
-        body: Container(
-          child: FutureBuilder(
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                var data = snapshot.data;
-                return Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          data['task_title'],
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w600
-                              //color: Theme.of(context).textTheme.,
-                              ),
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                          data['task_description'],
-                          style: TextStyle(
-                            fontSize: 14,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        Center(
-                          child: Column(
-                            children: [
-                              Text(
-                                "${data['task_budget']} Kč",
-                                style: TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.w900,
+        body: SingleChildScrollView(
+          child: Container(
+            child: FutureBuilder(
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  var data = snapshot.data;
+                  return Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            data['task_title'],
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w600
+                                //color: Theme.of(context).textTheme.,
                                 ),
-                              ),
-                              RaisedButton(
-                                color: Colors.greenAccent.shade400,
-                                onPressed: () {},
-                                child: const Text('Vytvořit nabídku',
-                                    style: TextStyle(fontSize: 20)),
-                              ),
-                            ],
                           ),
-                        ),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        Divider(
-                          color: Colors.white,
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Pavel V.",
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w500),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          Text(
+                            data['task_description'],
+                            style: TextStyle(
+                              fontSize: 14,
                             ),
-                            Text(
-                              "Hodnotim zaporne, akce byla na pytel a zanechal jsem koblih za odmenu. Slysel jsem, ze si na nem rano pochutnal pes.",
-                              style: TextStyle(
-                                fontSize: 14,
-                              ),
+                          ),
+                          SizedBox(
+                            height: 16,
+                          ),
+                          Center(
+                            child: Column(
+                              children: [
+                                Text(
+                                  "${data['task_budget']} Kč",
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                                ),
+                                RaisedButton(
+                                  color: Colors.greenAccent.shade400,
+                                  onPressed: () {},
+                                  child: const Text('Vytvořit nabídku',
+                                      style: TextStyle(fontSize: 20)),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ],
-                    ));
-              } else {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            },
-            future: getData(this.widget.id),
+                          ),
+                          SizedBox(
+                            height: 16,
+                          ),
+                          Column(children: buildList(20))
+                        ],
+                      ));
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              },
+              future: getData(this.widget.id),
+            ),
           ),
         ));
   }

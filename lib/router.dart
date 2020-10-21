@@ -10,5 +10,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case "task/detail":
       return MaterialPageRoute(
           builder: (context) => TaskDetail(id: settings.arguments));
+    default:
+      return MaterialPageRoute(builder: (context) => MyHomePage());
   }
 }

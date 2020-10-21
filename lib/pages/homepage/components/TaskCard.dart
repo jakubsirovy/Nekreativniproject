@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class TaskCard extends StatefulWidget {
-  int id;
-  int budget;
-  String task_title;
-  String country;
+  final int id;
+  final int budget;
+  final String task_title;
+  final String country;
 
   TaskCard({this.id, this.budget, this.task_title, this.country});
 

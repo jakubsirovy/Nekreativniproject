@@ -12,17 +12,37 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  ScrollController _scrollController;
+  int page = 0;
+
   List _data = [];
   Future getData() async {
-    var data = await Api().load("getList.php");
+    var data = await Api().load("getList.php", params: {"page": page});
     setState(() {
-      _data = data;
+      _data.addAll(data);
+    });
+  }
+
+  addPage() {
+    setState(() {
+      this.page += 1;
     });
   }
 
   @override
   void initState() {
     getData();
+    _scrollController = ScrollController();
+
+    _scrollController.addListener(() {
+      if (this._scrollController.position.pixels ==
+              this._scrollController.position.maxScrollExtent &&
+          _data.length > 8) {
+        print("Doscrollovano na konec");
+        addPage();
+        getData();
+      }
+    });
     super.initState();
   }
 
@@ -34,6 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text("Random název"),
         ),
         body: new ListView.builder(
+            controller: _scrollController,
             padding: const EdgeInsets.all(8),
             itemCount: _data.length,
             itemBuilder: (BuildContext context, int index) {
