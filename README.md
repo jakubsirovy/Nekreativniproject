@@ -1,3 +1,3 @@
 # nekreativniproject
 
-A new Flutter project.
+První aplikace ve flutteru
